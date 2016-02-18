@@ -1,8 +1,14 @@
-# read input
-data <- read.csv("/data/in/tables/source.csv");
+	library('keboola.r.docker.application')
+	
+	# intialize application
+	app <- DockerApplication$new('/data/')
+	app$readConfig()
 
-# do something 
-data['double_number'] <- data['number'] * 2
+	# read input
+	data <- read.csv("/data/in/tables/source.csv");
 
-# write output
-write.csv(data, file = "/data/out/tables/result.csv", row.names = FALSE)
+	# do something 
+	data['double_number'] <- data['number'] * app$getParameters()$multiplier
+
+	# write output
+	write.csv(data, file = "/data/out/tables/result.csv", row.names = FALSE)
